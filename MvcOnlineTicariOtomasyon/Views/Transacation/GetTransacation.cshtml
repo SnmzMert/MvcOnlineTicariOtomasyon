@@ -1,0 +1,119 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Transaction
+
+    @{
+        ViewBag.Title = "GetTransacation";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+            <h2>Satış Oluştur</h2>
+            @using (Html.BeginForm("UpdateTransacation", "Transacation", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Cari</label>
+                        @Html.HiddenFor(X=>X.Id)
+                        @Html.DropDownListFor(x => x.Currentid, (List<SelectListItem>)ViewBag.Current, "Seçiniz", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label>Müşteri Temsilcisi</label>
+                        @Html.DropDownListFor(x => x.Employeeid, (List<SelectListItem>)ViewBag.Employee, "Seçiniz", new { @class = "form-control" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="date">Tarih</label>
+                        <input type="date" id="date" name="date" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Ürün</label>
+                        @Html.DropDownListFor(x => x.Productid, (List<SelectListItem>)ViewBag.Product, "Seçiniz", new { @class = "form-control" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Fiyat</label>
+                        @Html.HiddenFor(X => X.Price, new { @id = "hiddenPrice" })
+                        @Html.TextBoxFor(X => X.Price, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        <label>Miktar</label>
+                        @Html.TextBoxFor(X => X.Amount, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Toplam Fiyat</label>
+                        @Html.HiddenFor(X => X.TotalPrice, new { @id = "hiddenTotalPrice" }) <!-- Gizli alan -->
+                        @Html.TextBoxFor(X => X.TotalPrice, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
+                    <br />
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-outline-warning">Düzenle</button>
+                        <a class="btn btn-danger" href="~/Transacation/Index">Vazgeç</a>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+    $(function () {
+        // Ürün dropdown listesinden seçim değiştiğinde bu fonksiyon çalışacak
+        $('#Productid').change(function () {
+            // Seçilen ürünün id'sini al
+            var selectedProductId = $(this).val();
+            $('#Amount').val('');
+            $('#TotalPrice').val('');
+            // Ajax isteği ile seçilen ürünün fiyatını getir
+            $.ajax({
+                url: '@Url.Action("GetProductPrice", "Transacation")', // Controller'da GetProductPrice adında bir Action oluşturun
+                type: 'GET',
+                dataType: 'json',
+                data: { productId: selectedProductId },
+                success: function (data) {
+                    // Başarılı olduğunda fiyat alanına fiyatı yaz
+                    var formattedPrice = data.price.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' });
+                    $('#Price').val(formattedPrice);
+                    $('#hiddenPrice').val(data.price); // Burada #Price, fiyatın yazılacağı textbox'ın id'si olmalı
+                },
+
+            });
+        });
+        $('#Price, #Amount').on('input', function () {
+            // Fiyatı ve miktarı al
+            var price = parseFloat($('#hiddenPrice').val()) || 0;
+            var amount = parseFloat($('#Amount').val()) || 0;
+            // Toplam fiyatı hesapla ve TotalPrice alanına yaz
+            var totalPrice = (price * amount).toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' });
+            $('#TotalPrice').val(totalPrice);
+
+            $('#hiddenTotalPrice').val((price * amount).toFixed(0));
+
+
+
+        });
+          var editDate = '@Model.Date.ToString("yyyy-MM-dd")'; // Modelden tarih değerini al, uygun formatta
+    $('#date').val(editDate); // Tarih input alanına değeri doldur
+    }
+
+    );
+    </script>
+

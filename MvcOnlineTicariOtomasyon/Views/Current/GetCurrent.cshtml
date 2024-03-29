@@ -1,0 +1,54 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Current
+@{
+    ViewBag.Title = "GetCurrent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Cari Düzenleme</h2>
+<br />
+@using (Html.BeginForm("UpdateCurrent", "Current", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.CurrentId)
+    <label>Cari Adı</label>
+    @Html.TextBoxFor(x => x.CurrentName, new { @class = "form-control", placeholder = "Ad Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
+    <br />
+    <label>Açıklama</label>
+    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Açıklama Girin" })
+    <br />
+    <label>Ülke</label>
+    @Html.TextBoxFor(x => x.Country, new { @class = "form-control", placeholder = "Ülke Girin" })
+    <br />
+    <label>Şehir</label>
+    @Html.TextBoxFor(x => x.City, new { @class = "form-control", placeholder = "Şehir Girin" })
+    <br />
+    <label>Telefon</label>
+    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", id = "phone", placeholder = "Telefon Numarası Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
+    <br />
+    <label>Vergi Dairesi</label>
+    @Html.TextBoxFor(x => x.TaxOffice, new { @class = "form-control", placeholder = "Vergi Dairesi Girin" })
+
+    <br />
+    <label>Mail</label>
+    @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", placeholder = "Mail Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
+    <br />
+    <label>Bakiyesi</label>
+    @Html.TextBoxFor(x => x.CurrentAmount, new { @class = "form-control", placeholder = "Bakiye Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
+    <br />
+    <button class="btn btn-outline-warning">Cari Düzenle</button>
+
+
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#phone').mask('+00 (000) 000-0000');
+
+    });
+</script>,

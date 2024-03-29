@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MvcOnlineTicariOtomasyon.Models.Classes.GroupClass2>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Departman Personel Sayıları</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Departman Adı</th>
+                    <th>Progress</th>
+                    <th style="width: 40px">Yüzde</th>
+                    <th style="width: 40px">Sayı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1;
+                }
+                @foreach (var x in Model)
+                {
+                    <tr>
+
+                        <td>@count</td>
+                        <td>@x.Departman</td>
+                        @{
+                            var progressClass = "";
+                            var badgeClass = "";
+                            if (x.DoubleValue <= 25)
+                            {
+                                progressClass = "bg-danger";
+                                badgeClass = "bg-danger";
+                            }
+                            else if (x.DoubleValue <= 50)
+                            {
+                                progressClass = "bg-warning";
+                                badgeClass = "bg-warning";
+                            }
+                            else if (x.DoubleValue <= 75)
+                            {
+                                progressClass = "bg-info";
+                                badgeClass = "bg-info";
+                            }
+                            else
+                            {
+                                progressClass = "bg-success";
+                                badgeClass = "bg-success";
+                            }
+                        }
+
+                        <td>
+                            <div class="progress progress-xs">
+                                <div class="progress-bar @progressClass" style="width: @x.DoubleValue%"></div>
+                            </div>
+                        </td>
+                        <td><span class="badge @badgeClass">@x.DoubleValue%</span></td>
+                        <td>@x.IntegerValue</td>
+                    </tr>
+                    count++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>

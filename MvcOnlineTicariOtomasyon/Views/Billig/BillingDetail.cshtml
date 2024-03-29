@@ -1,0 +1,54 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<Billing>
+@{
+    ViewBag.Title = "BillingDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h3>Fatura Detay</h3>
+<br />
+<table id="tbl1" class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Seri No</th>
+            <th>Açıklama</th>
+            <th>Tarih</th>
+            <th>Vergi Dairesi</th>
+            <th>Oluşturma Saati</th>
+            <th>Personel</th>
+            <th>Cari</th>
+            <th>Birim Fiyat</th>
+            <th>Miktar</th>
+            <th>Toplam Fiyat</th>
+
+
+            
+        </tr>
+    </thead>
+
+    @{
+        int count = 1;
+    }
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@count</td>
+            <td>@x.SerialNumber</td>
+            <td>@x.Description</td>
+            <td>@x.Date.ToString("dd.MM.yyyy")</td>
+            <td>@x.TaxOffice</td>
+            <td>@x.Time</td>
+            <td>@x.Employee.FirstName @x.Employee.LastName</td>
+            <td>@x.Current.CurrentName</td>
+            <td>@x.UnitPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+            <td>@x.Amount</td>
+            <td>@x.Sum.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+           
+          
+        </tr>
+        count++;
+    }
+</table>
+<a class="btn btn-outline-warning" href="~/Billig/Index">Geri Dön</a>

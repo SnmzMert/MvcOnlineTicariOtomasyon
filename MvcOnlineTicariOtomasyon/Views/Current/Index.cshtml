@@ -1,0 +1,43 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<Current>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h3>Cariler</h3>
+<br />
+<table class="table table-striped" >
+    <tr>
+        <th>#</th>
+        <th>Cari Adı</th>
+        <th>Açıklama</th>
+        <th>Ülke</th>
+        <th>Şehir</th>
+        <th>Telefon</th>
+        <th>Vergi Dairesi</th>
+        <th>Mail</th>
+        <th>Bakiyesi</th>
+        <th>İşlemler</th>
+        <th>Geçmiş Hareketler</th>
+    </tr>
+    @foreach(var x in Model)
+            {
+                <tr>
+                    <td>@x.CurrentId</td>
+                    <td>@x.CurrentName</td>
+                    <td>@x.Description</td>
+                    <td>@x.Country</td>
+                    <td>@x.City</td>
+                    <td>@x.Phone</td>
+                    <td>@x.TaxOffice</td>
+                    <td>@x.Mail</td>
+                    <td>@x.CurrentAmount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+                    <td><a href="~/Current/RemoveCurrent/@x.CurrentId" class="btn btn-outline-danger">Pasif</a><a style="margin-left:10px" href="~/Current/GetCurrent/@x.CurrentId" class="btn btn-outline-success">Güncelle</a></td>
+                    <td><a href="~/Current/GetCurrentMoves/@x.CurrentId" class="btn btn-default" style="background-color:deeppink">Listele</a></td>
+
+                </tr>
+            }
+    
+</table>
+<a href="~/Current/AddCurrent" class="btn btn-outline-primary">Yeni Cari Ekle</a>

@@ -1,0 +1,73 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<MvcOnlineTicariOtomasyon.Models.Classes.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h3>Ürünler</h3>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Ad</th>
+        <th>Marka</th>
+        <th>Kategori</th>
+        <th>Stok Miktarı</th>
+        <th>Maliyet Fiyatı</th>
+        <th>Satış Fiyatı</th>
+
+        <th>Resim</th>
+        <th>İşlemler</th>
+
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.ProductId</td>
+            <td>@x.ProductName</td>
+            <td>@x.Brand</td>
+            <td>@x.Category.CategoryName</td>
+            <td>@x.StokAmount</td>
+            <td>@x.PurchasePrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+            <td>@x.SalePrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+
+            <td>
+                <img src="@x.ProductImage" style="width:100px; height:70px; cursor:pointer;" onclick="zoomImage(this);" alt="Ürün" />
+            </td>
+            <td><a class="btn btn-outline-danger" href="/Product/RemoveProduct/@x.ProductId">Sil</a> <a class="btn btn-outline-success" href="/Product/GetProduct/@x.ProductId">Güncelle</a> </td>
+        </tr>
+    }
+</table>
+<a class="btn btn-outline-warning" href="~/Product/AddProduct">Yeni Ürün Ekle</a>
+<script>
+    function zoomImage(img) {
+        var modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '9999';
+        modal.onclick = function () {
+            modal.remove();
+        };
+
+        var imgClone = img.cloneNode();
+        imgClone.style.maxWidth = '200%';
+        imgClone.style.minWidth = '50%';
+        imgClone.style.maxHeight = '200%';
+        imgClone.style.minHeight = '50%';
+        imgClone.style.cursor = 'pointer';
+        imgClone.onclick = function () {
+            modal.remove();
+        };
+
+        modal.appendChild(imgClone);
+        document.body.appendChild(modal);
+    }
+</script>

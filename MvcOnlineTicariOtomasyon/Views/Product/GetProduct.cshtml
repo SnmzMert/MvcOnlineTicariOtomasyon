@@ -1,0 +1,42 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Product
+@{
+    ViewBag.Title = "GetProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Ürün Güncelleme</h3>
+
+
+
+
+@using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.ProductId)
+    <label>Ürün Adı</label>
+    @Html.TextBoxFor(X => X.ProductName, new { @class = "form-control" })
+    <br />
+    <label>Marka</label>
+    @Html.TextBoxFor(X => X.Brand, new { @class = "form-control" })
+    <br />
+    <label>Kategori</label>
+    @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.Category, new { @class = "form-control" })
+
+    <br />
+    <label>Stok</label>
+    @Html.TextBoxFor(X => X.StokAmount, new { @class = "form-control" })
+    <br />
+    <label>Alış Fiyat</label>
+    @Html.TextBoxFor(X => X.PurchasePrice, new { @class = "form-control" })
+    <br />
+    <label>Satış Fiyat</label>
+    @Html.TextBoxFor(X => X.SalePrice, new { @class = "form-control" })
+    <br />
+    <label>Durumu</label>
+    @Html.TextBoxFor(X => X.IsActive, new { @class = "form-control" })
+    <br />
+    <label>Resim</label>
+    @Html.TextBoxFor(X => X.ProductImage, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-outline-success">Ürün Güncelle</button>
+
+}

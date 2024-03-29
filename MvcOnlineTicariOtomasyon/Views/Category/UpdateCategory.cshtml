@@ -1,0 +1,21 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Category
+
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h3>Kategori Güncelleme</h3>
+<br />
+
+@using (Html.BeginForm("CategoryUpdate", "Category", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Kategori Ad</label>
+        @Html.TextBoxFor(x => x.CategoryName, new { @class = "form-control" })
+        @Html.HiddenFor(x => x.CategoryId)
+    </div>
+    <button class="btn btn-outline-info">Güncelle</button>
+}
+

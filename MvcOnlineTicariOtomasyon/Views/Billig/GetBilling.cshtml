@@ -1,0 +1,97 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<MvcOnlineTicariOtomasyon.Models.Classes.Transaction>
+@{
+    ViewBag.Title = "GetBilling";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h3>Fatura Oluştur</h3>
+<br />
+<table id="tbl1" class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cari</th>
+            <th scope="col">Müşteri Temsilcisi</th>
+            <th scope="col">Tarih</th>
+            <th scope="col">Ürün</th>
+            <th scope="col">Fiyat</th>
+            <th scope="col">Miktar</th>
+            <th scope="col">Toplam Fiyat</th>
+            <th scope="col">Fatura Oluştur</th>
+
+        </tr>
+    </thead>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.Id</td>
+            <td>@x.Current.CurrentName</td>
+            <td>@x.Employee.FirstName @x.Employee.LastName</td>
+            <td>@x.Date.ToString("dd.MMM.yyyy")</td>
+            <td>@x.Product.ProductName</td>
+            <td>@x.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+            <td>@x.Amount</td>
+            <td>@x.TotalPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+
+            <td><a href="~/Billig/AddBilling/@x.Id" class="btn btn-outline-success">Fatura Oluştur</a></td>
+
+
+        </tr>
+    }
+
+</table>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+
+<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+@*<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js "></script>*@
+
+
+
+<link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+
+<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+
+<script>
+
+
+
+    $('#tbl1').dataTable({
+
+
+
+        "language": {
+
+
+
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+
+
+
+        }
+
+
+
+    });
+
+
+
+</script>

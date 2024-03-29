@@ -1,0 +1,95 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<MvcOnlineTicariOtomasyon.Models.Classes.Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+
+<h3>Kategoriler</h3>
+
+<br />
+<table id="tbl1" class="table">
+    <thead > 
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Kategori Adı</th>
+            <th scope="col">İşlemler</th>
+        </tr>
+    </thead>
+    @{ 
+        int count = 1;
+    }
+
+        @foreach (var x in Model)
+        {
+        <tr>
+            <td>@count</td>
+            <td>@x.CategoryName</td>
+            <td><a class="btn btn-outline-danger" href="/Category/RemoveCategory/@x.CategoryId">Sil</a> <a class="btn btn-outline-success" href="/Category/UpdateCategory/@x.CategoryId">Güncelle</a> </td>
+
+
+        </tr>
+            count++;
+        }
+
+</table>
+<a href="/Category/AddCategory" class="btn btn-outline-primary">Yeni Kategori</a>
+@*
+<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+
+
+
+
+
+<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+@*
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js "></script>*@
+
+
+
+<link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+
+<script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+
+<script>
+
+
+
+    $('#tbl1').dataTable({
+
+
+
+        "language": {
+
+
+
+            "url": "//cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+
+
+
+        }
+
+
+
+    });
+
+
+
+</script>

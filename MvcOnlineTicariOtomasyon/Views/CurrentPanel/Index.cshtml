@@ -1,0 +1,55 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Current
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_CurrentPanel.cshtml";
+}
+<br />
+<h2 style="margin-left:20px; "  >Cari Blgi Paneli</h2>
+<br />
+@using(Html.BeginForm("Index2","CurrentPanel",FormMethod.Post))
+            {
+                <table class="table table-hover" style="margin-left:20px;">
+                    <tr>
+                        <td>
+                            <label>Mail Adresi:@HttpContext.Current.User.Identity.Name </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.CurrentName, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(x => x.TaxOffice, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Bakiye</label>
+                            @Html.TextBoxFor(x => x.CurrentAmount, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                </table>
+                <a href="#" style="margin-left:20px;" class="btn btn-outline-danger">Bilgileri Güncelle</a>
+            }

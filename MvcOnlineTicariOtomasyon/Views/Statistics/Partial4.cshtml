@@ -1,0 +1,74 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<Product>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Ürünler</h3>
+
+        <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+
+
+
+            </div>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-0" style="height: 300px;">
+        <table class="table table-head-fixed text-nowrap">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ad</th>
+                    <th>Marka</th>
+                    <th>Kategori</th>
+                    <th>Stok</th>
+                    <th>Satış Fiyat</th>
+                    <th>Stok Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>@x.ProductId</td>
+                        <td>@x.ProductName</td>
+                        <td>@x.Brand</td>
+                        <td>@x.Category.CategoryName</td>
+                        <td>@x.StokAmount</td>
+                        <td>@x.SalePrice</td>
+
+                        @{ var design = "";
+                            var status = "";
+                            var badgeClass = "";
+                            if (x.StokAmount <= 25)
+                            {
+                                status = "Kritik";
+                                badgeClass = "bg-danger";
+                                design = "fas fa-exclamation-triangle";
+                            }
+                            else if (x.StokAmount <= 50)
+                            {
+                                status = "Normal";
+                                badgeClass = "bg-warning";
+                            }
+                            else if (x.StokAmount <= 75)
+                            {
+                                status = "İyi";
+                                badgeClass = "bg-info";
+                            }
+                            else
+                            {
+                                status = "Çok İyi";
+                                badgeClass = "bg-success";
+                            }
+                        }
+
+                        <td><span style="width:50px; height:20px;" class="badge @badgeClass">@status</span>  <i style="color:red; margin-left:10px; " class="@design"></i> </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>

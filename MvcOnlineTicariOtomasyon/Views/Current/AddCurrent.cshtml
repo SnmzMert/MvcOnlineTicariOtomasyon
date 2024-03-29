@@ -1,0 +1,57 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Current
+@{
+    ViewBag.Title = "AddCurrent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h3>Cari Ekleme</h3>
+<br />
+<form class="form-group" method="post">
+    <label>Cari Adı</label>
+    @Html.TextBoxFor(x => x.CurrentName, new { @class = "form-control", placeholder = "Ad Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
+    <br />
+    <label>Açıklama</label>
+    @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Açıklama Girin" })
+    <br />
+    <label>Ülke</label>
+    @Html.TextBoxFor(x => x.Country, new { @class = "form-control", placeholder = "Ülke Girin" })
+    @Html.ValidationMessageFor(x => x.Country, "", new { @style = "color:red" })
+
+    <br />
+    <label>Şehir</label>
+    @Html.TextBoxFor(x => x.City, new { @class = "form-control", placeholder = "Şehir Girin" })
+    @Html.ValidationMessageFor(x => x.City, "", new { @style = "color:red" })
+
+    <br />
+    <label>Telefon</label>
+    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", id = "phone", placeholder = "Telefon Numarası Girin" })
+    @Html.ValidationMessageFor(x => x.Phone, "", new { @style = "color:red" })
+    <br />
+    <label>Vergi Dairesi</label>
+    @Html.TextBoxFor(x => x.TaxOffice, new { @class = "form-control", placeholder = "Vergi Dairesi Girin" })
+    @Html.ValidationMessageFor(x => x.TaxOffice, "", new { @style = "color:red" })
+
+    <br />
+    <label>Mail</label>
+    @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", placeholder = "Mail Girin" })
+    @Html.ValidationMessageFor(x => x.Mail, "", new { @style = "color:red" })
+    <br />
+    <label>Bakiyesi</label>
+    @Html.TextBoxFor(x => x.CurrentAmount, new { @class = "form-control", placeholder = "Bakiye Girin" })
+    @Html.ValidationMessageFor(x => x.CurrentAmount, "", new { @style = "color:red" })
+    <br />
+    <button class="btn btn-outline-warning">Yeni Cari Ekle</button>
+
+
+</form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+   
+ <script>
+        $(document).ready(function () {
+            $('#phone').mask('+00 (000) 000-0000');
+           
+        });
+    </script>,

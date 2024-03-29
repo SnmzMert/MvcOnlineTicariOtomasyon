@@ -1,0 +1,45 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Employee
+
+@{
+    ViewBag.Title = "UpdatePersonel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h3>Personel Güncelleme</h3>
+<br />
+@using (Html.BeginForm("PersonelUpdate", "Personel", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.EmployeeId)
+    <label>Ad</label>
+    @Html.TextBoxFor(X => X.FirstName, new { @class = "form-control" })
+    <br />
+    <label>Soyad</label>
+    @Html.TextBoxFor(X => X.LastName, new { @class = "form-control" })
+    <br />
+    <label>Departman</label>
+    @Html.DropDownListFor(x => x.Departmentid, (List<SelectListItem>)ViewBag.Department, new { @class = "form-control" })
+
+    <br />
+    <label>Adres</label>
+    @Html.TextBoxFor(X => X.Address, new { @class = "form-control" })
+    <br />
+    <label>Telefon</label>
+    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", id = "phone", placeholder = "Telefon Numarası Girin" })
+    <br />
+    <label>Resim</label>
+    @Html.TextBoxFor(X => X.EmployeeImage, new { @class = "form-control" })
+    <br />
+
+    <button class="btn btn-outline-success">Personel Güncelle</button>
+
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#phone').mask('+00 (000) 000-0000');
+
+    });
+</script>
