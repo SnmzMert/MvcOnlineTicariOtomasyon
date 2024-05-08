@@ -10,6 +10,8 @@ namespace MvcOnlineTicariOtomasyon.Models.Classes
     {
         [Key]
         public int Id { get; set; } 
+
+        public string SerialNumber {  get; set; }
         //ürünad
         //cariad
         //personelad

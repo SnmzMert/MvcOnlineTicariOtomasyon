@@ -11,33 +11,41 @@
 
 <br />
 <table id="tbl1" class="table">
-    <thead > 
+    <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Kategori Adı</th>
-            <th scope="col">İşlemler</th>
+            <th scope="col">Sil</th>
+            <th scope="col">Güncelle</th>
         </tr>
     </thead>
-    @{ 
+    @{
         int count = 1;
     }
 
-        @foreach (var x in Model)
-        {
+    @foreach (var x in Model)
+    {
         <tr>
             <td>@count</td>
             <td>@x.CategoryName</td>
-            <td><a class="btn btn-outline-danger" href="/Category/RemoveCategory/@x.CategoryId">Sil</a> <a class="btn btn-outline-success" href="/Category/UpdateCategory/@x.CategoryId">Güncelle</a> </td>
+            <td>@Html.ActionLink("SİL", "RemoveCategory", new {id= x.CategoryId }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?') " }) </td>
+            <td><a class="btn btn-outline-success" href="/Category/UpdateCategory/@x.CategoryId">Güncelle</a></td>
 
 
         </tr>
-            count++;
-        }
+        count++;
+    }
 
 </table>
 <a href="/Category/AddCategory" class="btn btn-outline-primary">Yeni Kategori</a>
+
+
+
+
+
 @*
-<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />*@
 
 
 
@@ -58,7 +66,7 @@
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
 @*
-<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js "></script>*@
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js "></script>*@
 
 
 
@@ -69,6 +77,7 @@
 <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
 
 <script>
+
 
 
 

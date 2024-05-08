@@ -1,0 +1,100 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Promotion
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <h2>Promosyon Oluştur</h2>
+
+        <form class="form-group" method="post">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <br />
+                    <label>Seri Numarası</label>
+
+
+                    @Html.TextBoxFor(x => x.SerialNumber, new { @Value = ViewBag.BillingNumber, @readonly = "readonly", @class = "form-control", @id = "serialNumber" })
+
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <label>Kampanya Adı</label>
+                    @Html.TextBoxFor(x => x.PromotionName, new { @class = "form-control" })
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <label>Promosyon</label>
+                    @Html.DropDownListFor(x => x.Productid, (List<SelectListItem>)ViewBag.Product, "Seçiniz", new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                   
+                    <label>Promosyon Puanı</label>
+
+                    @Html.TextBoxFor(X => X.PromotionPoint, new { @class = "form-control" })
+
+
+                </div>
+            </div>
+
+            <br />
+            <div class="row">
+                
+                <div class="col-md-6">
+                    <label for="StartDate">Başlangıç Tarihi</label>
+                    <input type="date" id="startdate" name="StartDate" class="form-control">
+                </div>
+                <div class="col-md-6">
+
+                    <label for="EndDate">Bitiş</label>
+                    <input type="date" id="enddate" name="EndDate" class="form-control">
+                </div>
+            </div>
+
+
+
+            <br />
+
+
+
+
+
+            <button class="btn btn-outline-success" id="submit">Promosyon Oluştur</button>
+            <a class="btn btn-danger" href="~/Promotion/Index">İptal</a>
+
+
+
+
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+
+
+
+    var currentDate = new Date(); // Şu anki tarih ve zamanı al
+    var day = currentDate.getDate(); // Günü al
+    var month = currentDate.getMonth() + 1; // Ayı al (0'dan başladığı için 1 ekleyin)
+    var year = currentDate.getFullYear(); // Yılı al
+
+    // Tarihi "yyyy-MM-dd" formatına dönüştür
+    var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+
+    $('#startdate').val(formattedDate);
+    $('#enddate').val(formattedDate);
+
+
+
+</script>

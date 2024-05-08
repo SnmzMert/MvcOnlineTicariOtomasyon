@@ -1,0 +1,70 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<ProductPoint>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h3>Ürün Puan Ekranı</h3>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <a href="/ProductPoint/Create" class="btn btn-success" title="Ekle">
+                <i class="fa fa-plus"></i> Ekle
+            </a>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        <label>#</label>
+                    </th>
+                    <th>
+                        <label>Ürün Adı</label>
+                    </th>
+                    
+                    <th>
+                        <label>Ürün Puanı</label>
+                    </th>
+                    <th></th>
+                </tr>
+
+                @{
+                    int count = 1;
+                }
+
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @x.Product.ProductName
+                        </td>
+
+                        <td>
+                            @x.ProdductPoint
+                        </td>
+                        <td style="text-align: right;">
+                            <a href="/BatteryPoint/Edit/@x.ProductPointId" class="btn btn-warning btn-xs float-right" title="Düzenle" >
+                                <i class="fa fa-edit"></i> Düzenle
+                            </a>
+
+                            <a href="/ProductPoint/Details/@x.ProductPointId" class="btn btn-info btn-xs float-right" title="İncele" style="margin-left: 10px; margin-right:10px;">
+                                <i class="fa fa-search"></i> İncele
+                            </a>
+
+                            <a href="/ProductPoint/Delete/@x.ProductPointId" class="btn btn-danger btn-xs float-right"  title="Sil">
+                                <i class="fa fa-trash"></i> Sil
+                            </a>
+                        </td>
+                    </tr>
+                    count++;
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

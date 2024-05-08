@@ -41,7 +41,7 @@ namespace MvcOnlineTicariOtomasyon.Models.Classes
         public string Mail { get; set; }
 
         [Column(TypeName = "varchar")]
-        [StringLength(50, ErrorMessage = "En Fazla 20 Karekter Yazabilirsiniz"), Required(ErrorMessage = "Bu alanı boş geçemezsiniz")]
+        [StringLength(50, ErrorMessage = "En Fazla 20 Karekter Yazabilirsiniz")]
         public string Password { get; set; }
 
 

@@ -1,0 +1,32 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<Transaction>
+@{
+    ViewBag.Title = "Deneme";
+    Layout = "~/Views/Shared/_CurrentPanel.cshtml";
+}
+
+<h2>Deneme</h2>
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Ürün</th>
+        <th>Miktar</th>
+        <th>Birim Fiyatı</th>
+        <th>Ürün Toplamı</th>
+    </tr>
+   
+  @foreach(var x in Model)
+    {
+        <tr>
+            <td>@x.Product.ProductName</td>
+            <td>@x.Amount</td>
+            <td>@x.Price</td>
+            <td>@x.TotalPrice</td>
+            <td>@x.SerialNumber</td>
+           
+        </tr>
+       
+    }
+   
+</table>

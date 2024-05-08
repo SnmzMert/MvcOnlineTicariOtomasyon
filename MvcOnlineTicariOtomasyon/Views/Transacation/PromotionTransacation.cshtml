@@ -1,24 +1,30 @@
 ﻿@model MvcOnlineTicariOtomasyon.Models.Classes.Transaction
 @{
-    ViewBag.Title = "AddTransacation";
+    ViewBag.Title = "PromotionTransacation";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+
+
+
+
 
 <style>
     #salesTable {
         display: none; /* Tabloyu gizle */
     }
+
     #currentTable {
         display: none; /* Tabloyu gizle */
     }
-
+   
 </style>
 
 <div class="row">
     <div class="col-md-12">
         <br />
-        <h2>Satış Oluştur</h2>
-        <form class="form-group" method="post" action="@Url.Action("AddTransacation", "Transacation")">
+        <h2>Promosyonlu Satış Oluştur</h2>
+        <form class="form-group" method="post" action="@Url.Action("PromotionTransacation", "Transacation")">
             <div id="transacationForm">
 
 
@@ -28,19 +34,23 @@
                         <label>Sipariş No</label>
                         @Html.TextBoxFor(x => x.SerialNumber, new { @Value = ViewBag.BillingNumber, @readonly = "readonly", @class = "form-control", @id = "serialNumber" })
                     </div>
-                    <div class="col-md-6"></div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
                         <label>Cari</label>
                         @Html.DropDownListFor(x => x.Currentid, (List<SelectListItem>)ViewBag.Current, "Seçiniz", new { @class = "form-control" })
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
-                        
-                        <table style="margin-top:35px;" id="currentTable" >
-                            
+                        <label>Promosyon</label>
+                        @Html.DropDownList("currentDropdown", (List<SelectListItem>)ViewBag.Promotion, "Seçiniz", new { @class = "form-control" })
+                       
+                    </div>
+                    <div class="col-md-6">
+
+                        <table style="margin-top:35px;" id="currentTable">
+
                             <tbody id="currenttable">
-                             
+
                                 <!-- Tablo satırları burada dinamik olarak eklenecek -->
                             </tbody>
                         </table>
@@ -49,6 +59,24 @@
                     </div>
                 </div>
                 <br />
+                <div class="col-md-12">
+                    <table id="PromotionTable" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Promosyon Adı</th>
+                                <th>Bitiş Tarihi</th>
+                                <th>Ürün Adı</th>
+                                <th>Puanı</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="PromotionTable">
+                            <!-- Tablo satırları burada dinamik olarak eklenecek -->
+                        </tbody>
+                    </table>
+
+                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <label for="date">Sevk Tarih</label>
@@ -76,10 +104,15 @@
                     <div class="col-md-6">
                         <label>Toplam Fiyat</label>
                         @Html.HiddenFor(X => X.TotalPrice, new { @id = "hiddenTotalPrice" }) <!-- Gizli alan -->
+                      
                         @Html.TextBoxFor(X => X.TotalPrice, new { @readonly = "readonly", @class = "form-control" })
                     </div>
                     <br />
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <lable>Puan</lable>
+                     <input class="form-control" type="text" id="Point" readonly>
+                   
+                    </div>
                 </div>
                 <br />
                 <div class="row">
@@ -102,12 +135,20 @@
                                     <th>Fiyat</th>
                                     <th>Miktar</th>
                                     <th>Toplam Fiyat</th>
+                                    <th>Puan</th>
                                     <th>Sil</th>
                                 </tr>
                             </thead>
                             <tbody id="salesTableBody">
                                 <!-- Tablo satırları burada dinamik olarak eklenecek -->
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8"></td>
+                                    <td id="totalPointsFooter"><strong>Toplam Puan:</strong> <span id="totalProductPoints"></span></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
 
@@ -145,16 +186,64 @@
                 }
             });
 
+            $.ajax({
+                url: '/Transacation/GetPoint',
+                type: 'GET',
+                dataType: 'json',
+                data: { productId: selectedProductId },
+                success: function (data) {
+
+
+                    $('#Point').val(data.point);
+
+                }
+            });
 
 
 
+            // '<td>' + data.promotionproductid + '</td>' +
 
         });
+        $(document).ready(function () {
+            $('#currentDropdown').change(function () {
+                var selectedValue = $(this).val();
+                // Seçilen değeri kullanarak istediğiniz işlemleri yapabilirsiniz
+
+                $.ajax({
+                    url: '/Transacation/GetPromotoion',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { promotionId: selectedValue },
+                    success: function (data) {
+
+
+                        // Yeni bir tablo satırı oluştur
+                        var newRow = '<tr>' +
+
+                            '<td>' + data.promotionname + '</td>' +
+                           
+                            '<td>' + data.endDate + '</td>' +
+                            '<td>' + data.promotionproductname + '</td>' +
+
+                            '<td>' + data.promotionpoint + '</td>' +
+
+                            '</tr>';
+
+                        // Tablonun tbody'sine yeni satırı ekle
+                        $('#PromotionTable tbody').append(newRow);
+                    }
+                });
+            });
+        });
+
 
         $('#Currentid').change(function () {
             $('#salesTableBody').empty();
             $('#currentTable').empty();
-            adjustTableVisibility();
+           
+
+
+
             var selectedCurrentId = $(this).val();
             $.ajax({
                 url: '/Transacation/GetCurrentAmount',
@@ -187,18 +276,23 @@
 
 
 
-        $('#Price, #Amount').on('input', function () {
+        $('#Price, #Amount,#Point ').on('input', function () {
             var price = parseFloat($('#hiddenPrice').val()) || 0;
             var amount = parseFloat($('#Amount').val()) || 0;
+            var point = parseFloat($('#Point').val()) || 0;
             var totalPrice = (price * amount).toLocaleString('tr-TR', { style: 'currency', currency: 'TRY' });
+            var totalPoint = (point * amount);
+            $('#TotalPoint').val(totalPoint);
             $('#TotalPrice').val(totalPrice);
             $('#hiddenTotalPrice').val((price * amount).toFixed(0));
         });
 
+
+
         $('#add').click(function () {
             var siparis = $('#serialNumber').val();
             var Currentid = $('#Currentid option:selected').val();
-            var CurrentidDisplay = $('#Currentid option:selected').text(); // Görünen değeri al
+            var CurrentidDisplay = $('#Currentid option:selected').text();
             var Employeeid = $('#Employeeid').val();
             var EmployeeidDisplay = $('#Employeeid option:selected').text();
             var date = $('#date').val();
@@ -209,21 +303,37 @@
             var Amount = $('#Amount').val();
             var TotalPrice = $('#hiddenTotalPrice').val();
             var TotalPriceDisplay = $('#TotalPrice').val();
+            var ProductPoint = $('#Point').val();
 
             $('#salesTableBody').append('<tr>' +
                 '<td>' + siparis + '</td>' +
-                '<td>' + Currentid + '</td>' +
+                '<td>' + CurrentidDisplay + '</td>' +
                 '<td>' + Employeeid + '</td>' +
                 '<td>' + date + '</td>' +
-                '<td>' + Productid + '</td>' +
-                '<td>' + Price + '</td>' +
+                '<td>' + ProductidDisplay + '</td>' +
+                '<td>' + PriceDisplay + '</td>' +
                 '<td>' + Amount + '</td>' +
-                '<td>' + TotalPrice + '</td>' +
+                '<td>' + TotalPriceDisplay + '</td>' +
+                '<td>' + ProductPoint + '</td>' +
                 '<td><button class="btn btn-danger delete-row">Sil</button></td>' +
                 '</tr>');
 
+            // Satır eklendikten sonra ürün puanlarını topla ve altta göster
+            calculateTotalProductPoints();
+
             adjustTableVisibility();
         });
+
+        function calculateTotalProductPoints() {
+            var totalProductPoints = 0;
+            $('#salesTableBody tr').each(function () {
+                var productPoint = parseInt($(this).find('td:eq(8)').text()); // 8. sütundaki (indeks 7) ürün puanını al
+                totalProductPoints += productPoint;
+            });
+            $('#totalProductPoints').text(totalProductPoints);
+        }
+
+
 
         $('form').submit(function (event) {
             event.preventDefault(); // Formun normal submit işlemini engelle

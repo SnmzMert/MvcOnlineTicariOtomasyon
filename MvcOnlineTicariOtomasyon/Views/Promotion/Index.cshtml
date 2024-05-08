@@ -1,24 +1,24 @@
 ﻿@using MvcOnlineTicariOtomasyon.Models.Classes
-@model List<Billing>
+@model List<Promotion>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <br />
-<h3>Faturalar</h3>
+<h3>Promosyon </h3>
 <br />
 <table id="tbl1" class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>#</th>
             <th>Seri No</th>
-            <th>Açıklama</th>
-            <th>Tarih</th>
-            <th>Vergi Dairesi</th>
-            <th>Oluşturma Saati</th>
-            
-            <th>Detaylar  </th>
+            <th>Promosyon Adı</th>
+            <th>Ürün Adı</th>
+            <th>Puanı</th>
+            <th>Başlangıç </th>
+            <th>Bitiş </th>
+            <th> </th>
         </tr>
     </thead>
 
@@ -28,19 +28,24 @@
     @foreach (var x in Model)
     {
         <tr>
-            
+
             <td>@count</td>
-            <td>@x.SerialNumber</td> 
-            <td>@x.Description</td>
-            <td>@x.Date.ToString("dd.MMM.yyyy")</td>
-            <td>@x.TaxOffice</td>
-            <td>@x.Time</td>        
-            <td><a class="btn btn-outline-dark" href="~/Billig/BillingDetail/?SerialNumber=@x.SerialNumber">Detaylar</a></td>
+            <td>@x.SerialNumber</td>
+            <td>@x.PromotionName</td>
+            <td>@x.Product.ProductName</td>
+            <td>@x.PromotionPoint</td>
+            <td>@x.StartDate.ToString("dd.MMM.yyyy")</td>
+            <td>@x.EndDate.ToString("dd.MMM.yyyy")</td>
+            
+
+
+            <td><a class="btn btn-outline-warning" href="~/Billig/BillingDetail/?SerialNumber=@x.SerialNumber">Güncelle</a>
+            <a class="btn btn-outline-danger" href="~/Promotion/Delete/@x.PromotionId">Sil</a></td>
         </tr>
         count++;
     }
 </table>
-<a class="btn btn-outline-warning" href="~/Billig/GetBilling">Yeni Fatura Ekle</a>
+<a class="btn btn-outline-success" href="~/Promotion/Create">Yeni Promosyon Tanımla</a>
 
 @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
 

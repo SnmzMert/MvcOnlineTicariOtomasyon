@@ -1,0 +1,26 @@
+﻿@model MvcOnlineTicariOtomasyon.Models.Classes.ProductPoint
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2>Puan Tanımla</h2>
+<br />
+
+
+<form class="form-group" method="post">
+
+    <label>Ürün Adı</label>
+    @Html.DropDownListFor(x => x.Productid, (List<SelectListItem>)ViewBag.Product, "Seçiniz", new { @class = "form-control" })
+    <br />
+    <label>Puanı</label>
+    @Html.TextBoxFor(X => X.ProdductPoint, new { @class = "form-control", type = "number", step = "1" })
+
+
+    <br />
+    <div class="col-md-6">
+        <button class="btn btn-outline-warning">Puan Tanımla</button>
+        <a class="btn btn-danger" href="~/ProductPoint/Index">Vazgeç</a>
+    </div>
+
+</form>

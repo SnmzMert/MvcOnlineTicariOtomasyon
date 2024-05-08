@@ -1,0 +1,33 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<Transaction>
+
+<table class="table table-hover">
+    <tr>
+        <th>Ürün</th>
+        <th>Miktar</th>
+        <th>Birim Fiyatı</th>
+        <th>Ürün Toplamı</th>
+    </tr>
+    @{
+        decimal total = 0; // Toplam fiyatı tutmak için bir değişken tanımlayın
+    }
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.Product.ProductName</td>
+            <td>@x.Amount</td>
+            <td>@x.Price.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+            <td>@x.TotalPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
+           
+            @{
+                total += x.TotalPrice; // Her satırdaki total fiyatları topla
+            }
+        </tr>
+        <tr></tr>
+    }
+    <tr>
+        <!-- Toplam fiyat satırı -->
+        <td colspan="3"><strong>Toplam:</strong></td>
+        <td><strong>@total.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</strong></td> <!-- Toplam fiyatı yazdır -->
+    </tr>
+</table>

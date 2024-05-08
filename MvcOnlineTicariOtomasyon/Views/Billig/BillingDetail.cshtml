@@ -5,50 +5,70 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<br />
-<h3>Fatura Detay</h3>
-<br />
-<table id="tbl1" class="table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>#</th>
-            <th>Seri No</th>
-            <th>Açıklama</th>
-            <th>Tarih</th>
-            <th>Vergi Dairesi</th>
-            <th>Oluşturma Saati</th>
-            <th>Personel</th>
-            <th>Cari</th>
-            <th>Birim Fiyat</th>
-            <th>Miktar</th>
-            <th>Toplam Fiyat</th>
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <h2>Fatura Detaylar</h2>
 
+        <form action="/" method="get">
 
-            
-        </tr>
-    </thead>
+            <div class="row">
+                <div class="col-md-4">
+                    <br />
+                    <label>Seri Numarası</label>
+                    <div class="form-control">@ViewBag.Serial</div>
+                </div>
+             
+                <div class="col-md-4">
+                    <br />
+                    <label>Açıklama</label>
+                    <div class="form-control">@ViewBag.Description</div>
 
-    @{
-        int count = 1;
-    }
-    @foreach (var x in Model)
-    {
-        <tr>
-            <td>@count</td>
-            <td>@x.SerialNumber</td>
-            <td>@x.Description</td>
-            <td>@x.Date.ToString("dd.MM.yyyy")</td>
-            <td>@x.TaxOffice</td>
-            <td>@x.Time</td>
-            <td>@x.Employee.FirstName @x.Employee.LastName</td>
-            <td>@x.Current.CurrentName</td>
-            <td>@x.UnitPrice.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
-            <td>@x.Amount</td>
-            <td>@x.Sum.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</td>
-           
-          
-        </tr>
-        count++;
-    }
-</table>
+                </div>
+               
+                <div class="col-md-4">
+                    <br />
+                    <label>Cari</label>
+                    <div class="form-control">@ViewBag.CurrentName</div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <br />
+                    <label>Tarih</label>
+                    <div class="form-control">@ViewBag.Date</div>
+                </div>
+                <div class="col-md-4">
+                    <br />
+                    <label>Oluşturma Saati</label>
+                    <div class="form-control">@ViewBag.Time</div>
+
+                </div>
+                <div class="col-md-4">
+                    <br />
+                    <label>Vergi Dairesi</label>
+                    <div class="form-control">@ViewBag.Tax</div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <br />
+                    <label>Oluşturan</label>
+                    <div class="form-control">@ViewBag.Employer</div>
+                </div>
+            </div>
+
+        </form>
+        <div class="col-md-12">
+            <br />
+            @Html.Action("BillingDetailPartial")
+        </div>
+
+    </div>
+</div>
 <a class="btn btn-outline-warning" href="~/Billig/Index">Geri Dön</a>

@@ -138,6 +138,8 @@
     <Compile Include="Controllers\PersonelController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductDetailController.cs" />
+    <Compile Include="Controllers\ProductPointController.cs" />
+    <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\ToDoController.cs" />
     <Compile Include="Controllers\TransacationController.cs" />
@@ -162,6 +164,8 @@
     <Compile Include="Models\Classes\GroupClassBrand.cs" />
     <Compile Include="Models\Classes\GroupClassCategory.cs" />
     <Compile Include="Models\Classes\Product.cs" />
+    <Compile Include="Models\Classes\ProductPoint.cs" />
+    <Compile Include="Models\Classes\Promotion.cs" />
     <Compile Include="Models\Classes\ToDo.cs" />
     <Compile Include="Models\Classes\Transaction.cs" />
     <Compile Include="Models\Classes\Command.cs" />
@@ -2924,6 +2928,14 @@
     <Content Include="Views\Login\LoginCurrent.cshtml" />
     <Content Include="Views\Login\LoginPersonel.cshtml" />
     <Content Include="Views\CurrentPanel\GetTransacation.cshtml" />
+    <Content Include="Views\Billig\BillingDetailPartial.cshtml" />
+    <Content Include="Views\Billig\Deneme.cshtml" />
+    <Content Include="Views\Promotion\Index.cshtml" />
+    <Content Include="Views\ProductPoint\Index.cshtml" />
+    <Content Include="Views\ProductPoint\Create.cshtml" />
+    <Content Include="Views\ProductPoint\Detail.cshtml" />
+    <Content Include="Views\Promotion\Create.cshtml" />
+    <Content Include="Views\Transacation\PromotionTransacation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

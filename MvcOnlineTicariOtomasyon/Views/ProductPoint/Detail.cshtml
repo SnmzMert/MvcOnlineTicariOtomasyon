@@ -1,0 +1,59 @@
+﻿@using MvcOnlineTicariOtomasyon.Models.Classes
+@model List<ProductPoint>
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*<h2>Detail</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Ürün Adı</label>
+            <dd>
+              <div></div>
+            </dd>
+            </dt>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductName)
+            <dd>
+
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+            </dt>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductUnitCode)
+            <dd>
+                @Html.DisplayFor(model => model.ProductUnitCode)
+            </dd>
+            </dt>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductPoint)
+            <dd>
+                @Html.DisplayFor(model => model.ProductPoint)
+            </dd>
+            </dt>
+
+
+
+
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            <div class="form-actions no-color">
+                @Html.LinkButton("/BatteryPoint/Edit/" + Model.Id + "", "warning", "", "", "edit", "Düzenle")
+                @Html.LinkButton("/BatteryPoint/Index", "danger", "", "", "arrow-left", "Vazgeç")
+            </div>
+        }
+    </div>
+</div>*@

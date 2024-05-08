@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using MvcOnlineTicariOtomasyon.Models.Classes;
@@ -9,36 +10,57 @@ namespace MvcOnlineTicariOtomasyon.Controllers
 {
     public class TransacationController : Controller
     {
-        // GET: Transacation
+
         Context c = new Context();
         public ActionResult Index()
         {
-            var values=c.Transactions.ToList();
+            var values = c.Transactions.ToList();
             return View(values);
         }
         public ActionResult AddTransacation()
         {
-            List<SelectListItem> value1 = (from x in c.Currents.Where(x => x.IsActive==true).ToList()
+            var TransacationList = c.Transactions.ToList();
+            int currentYear = DateTime.Now.Year;
+
+
+            var existingBillings = TransacationList.Where(x => x.Date.Year == currentYear);
+
+
+            int lastBillingNumber = existingBillings.Any() ? existingBillings.Max(x => int.Parse(x.SerialNumber.Substring(x.SerialNumber.IndexOf('-') + 1))) : 0;
+
+
+
+
+            string billingNumber = $"{currentYear}-{(lastBillingNumber + 1).ToString("D3")}";
+
+
+
+            ViewBag.BillingNumber = billingNumber;
+
+            ViewBag.CurrentUser = 1;
+
+
+            List<SelectListItem> value1 = (from x in c.Currents.Where(x => x.IsActive == true).ToList()
                                            select new SelectListItem
                                            {
                                                Text = x.CurrentName,
                                                Value = x.CurrentId.ToString()
                                            }).ToList();
             ViewBag.Current = value1;
-            List<SelectListItem>value2= (from x in c.Products
-                                         where x.IsActive == true && x.StokAmount > 0
-                                         select new SelectListItem
-                                         {
-                                             Text = x.ProductName,
-                                            Value= x.ProductId.ToString()
-                                        }
-                                        ).ToList();
-            ViewBag.Product = value2;
-            List<SelectListItem> value3 = (from x in c.Employees.Where(x=>x.Department.DepartmentId==1).ToList()
+            List<SelectListItem> value2 = (from x in c.Products
+                                           where x.IsActive == true && x.StokAmount > 0
                                            select new SelectListItem
                                            {
-                                               Text = x.FirstName + ' '+ x.LastName,
-                                               Value = x.EmployeeId.ToString()  
+                                               Text = x.ProductName,
+                                               Value = x.ProductId.ToString()
+                                           }
+                                        ).ToList();
+            ViewBag.Product = value2;
+            List<SelectListItem> value3 = (from x in c.Employees.Where(x => x.Department.DepartmentId == 1).ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.FirstName + ' ' + x.LastName,
+                                               Value = x.EmployeeId.ToString()
                                            }
                                         ).ToList();
             ViewBag.Employee = value3;
@@ -58,15 +80,79 @@ namespace MvcOnlineTicariOtomasyon.Controllers
             }
         }
 
-        [HttpPost] 
-        public ActionResult AddTransacation(Transaction p)
+        public ActionResult GetCurrentAmount(int currentId)
         {
-            c.Transactions.Add(p);
-           
-            c.SaveChanges();
-            return RedirectToAction("Index");
+            var current = c.Currents.FirstOrDefault(x => x.CurrentId == currentId);
+            if (current != null)
+            {
+                return Json(new { amount = current.CurrentAmount }, JsonRequestBehavior.AllowGet);
+
+
+            }
+            else
+            {
+                return Json(new { amount = 0 }, JsonRequestBehavior.AllowGet);
+            }
         }
-        public ActionResult GetTransacation(int id) 
+
+
+        public ActionResult GetPromotoion(int promotionId)
+        {
+            var promotion = c.Promotions.FirstOrDefault(x => x.PromotionId == promotionId);
+            if (promotion != null)
+            {
+                return Json(new
+                {
+                    promotionname = promotion.PromotionName,
+                    promotionproductid = promotion.Product.ProductId,
+                    promotionproductname = promotion.Product.ProductName,
+                    endDate = promotion.EndDate.ToString("dd.MMM.yyyy"),
+                    promotionpoint = promotion.PromotionPoint
+                }, JsonRequestBehavior.AllowGet) ;
+            }
+            else
+            {
+                return Json(new { promotion = "null" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetPoint(int productId )
+        {
+            var promotion = c.ProductPoints.FirstOrDefault(x => x.Productid == productId);
+            if (promotion != null)
+            {
+                return Json(new
+                {
+                    point = promotion.ProdductPoint,
+                   
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { promotion = "null" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        [HttpPost]
+        public JsonResult AddTransacation(List<Transaction> transactions)
+        {
+            if (transactions != null)
+            {
+                foreach (var transaction in transactions)
+                {
+                    c.Transactions.Add(transaction);
+                }
+                c.SaveChanges();
+                return Json(new { success = true, redirectTo = Url.Action("Index", "Transaction") });
+            }
+            return Json(new { success = false }); // hata durumunda başarısızlık bilgisini JSON olarak döndür
+        }
+
+
+
+        public ActionResult GetTransacation(int id)
         {
             List<SelectListItem> value1 = (from x in c.Currents.ToList()
                                            select new SelectListItem
@@ -76,7 +162,7 @@ namespace MvcOnlineTicariOtomasyon.Controllers
                                            }).ToList();
             ViewBag.Current = value1;
             List<SelectListItem> value2 = (from x in c.Products.ToList()
-                                          
+
                                            select new SelectListItem
                                            {
                                                Text = x.ProductName,
@@ -100,13 +186,13 @@ namespace MvcOnlineTicariOtomasyon.Controllers
         public ActionResult UpdateTransacation(Transaction p)
         {
             var trn = c.Transactions.Find(p.Id);
-           trn.Currentid=p.Currentid;
+            trn.Currentid = p.Currentid;
             trn.TotalPrice = p.TotalPrice;
             trn.Productid = p.Productid;
             trn.Amount = p.Amount;
             trn.Price = p.Price;
-            trn.Currentid= p.Currentid;
-            trn.Date= p.Date;
+            trn.Currentid = p.Currentid;
+            trn.Date = p.Date;
             c.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -114,6 +200,56 @@ namespace MvcOnlineTicariOtomasyon.Controllers
         {
             var values = c.Transactions.ToList();
             return View(values);
+        }
+
+        public ActionResult PromotionTransacation()
+        {
+            var TransacationList = c.Transactions.ToList();
+            int currentYear = DateTime.Now.Year;
+
+
+            var existingBillings = TransacationList.Where(x => x.Date.Year == currentYear);
+
+
+            int lastBillingNumber = existingBillings.Any() ? existingBillings.Max(x => int.Parse(x.SerialNumber.Substring(x.SerialNumber.IndexOf('-') + 1))) : 0;
+
+
+
+
+            string billingNumber = $"{currentYear}-{(lastBillingNumber + 1).ToString("D3")}";
+
+
+
+            ViewBag.BillingNumber = billingNumber;
+
+            ViewBag.CurrentUser = @Session["userName"];
+
+
+            List<SelectListItem> value1 = (from x in c.Currents.Where(x => x.IsActive == true).ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.CurrentName,
+                                               Value = x.CurrentId.ToString()
+                                           }).ToList();
+            ViewBag.Current = value1;
+            List<SelectListItem> value2 = (from x in c.Products
+                                           where x.IsActive == true && x.StokAmount > 0
+                                           select new SelectListItem
+                                           {
+                                               Text = x.ProductName,
+                                               Value = x.ProductId.ToString()
+                                           }
+                                        ).ToList();
+            ViewBag.Product = value2;
+            List<SelectListItem> value3 = (from x in c.Promotions.Where(x => x.EndDate >= DateTime.Today).ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.PromotionName,
+                                               Value = x.PromotionId.ToString()
+                                           }
+                                        ).ToList();
+            ViewBag.Promotion = value3;
+            return View();
         }
     }
 }

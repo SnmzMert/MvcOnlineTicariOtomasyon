@@ -41,17 +41,27 @@
     @Html.TextBoxFor(x => x.CurrentAmount, new { @class = "form-control", placeholder = "Bakiye Girin" })
     @Html.ValidationMessageFor(x => x.CurrentAmount, "", new { @style = "color:red" })
     <br />
-    <button class="btn btn-outline-warning">Yeni Cari Ekle</button>
+    <button class="btn btn-outline-warning" id="btn1">Yeni Cari Ekle</button>
 
 
 </form>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-   
- <script>
-        $(document).ready(function () {
-            $('#phone').mask('+00 (000) 000-0000');
-           
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script>
+    $(function () {
+        $('#phone').mask('+00 (000) 000-0000');
+
+       
+       
+
+        // Butona tıklama olayının dinlenmesi
+        $('#btn1').on('click', function () {
+            swal("Good job!", "You clicked the button!", "success");
         });
-    </script>,
+    });
+</script>

@@ -33,6 +33,7 @@ namespace MvcOnlineTicariOtomasyon.Controllers
             p.IsActive = true;
 
             c.SaveChanges();
+            ViewBag.ShowAlert = true;
             return RedirectToAction("Index");
         }
 

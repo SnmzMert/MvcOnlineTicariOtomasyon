@@ -11,13 +11,14 @@
         <h2>Fatura Oluştur</h2>
 
         <form class="form-group" method="post">
-            
+
             <div class="row">
                 <div class="col-md-6">
                     <br />
                     <label>Seri Numarası</label>
-                    @Html.HiddenFor(x => x.Transacationid, new { @Value = ViewBag.Trans })
-                    @Html.TextBoxFor(x => x.SerialNumber, new { @Value = ViewBag.BillingNumber, @readonly = "readonly", @class = "form-control", @id = "serialNumber" })
+                    @Html.HiddenFor(x => x.TransacationSerialNumber, new { @Value = ViewBag.Trans })
+                   @Html.TextBoxFor(X => X.Transacationid, new{ @class="form-control"})
+                    @Html.TextBoxFor(x => x.SerialNumber, new { @Value = ViewBag.Trans, @readonly = "readonly", @class = "form-control", @id = "serialNumber" })
 
                 </div>
                 <div class="col-md-6">
@@ -53,42 +54,36 @@
                     <label>Alıcı</label>
                     @Html.HiddenFor(X => X.Currentid, new { @Value = ViewBag.CurrentId })
                     @Html.TextBoxFor(X => X.Currentid, new { @Value = ViewBag.CurrentName, @readonly = "readonly", @class = "form-control" })
+                    @Html.TextBoxFor(X => X.Amount, new { @Value = ViewBag.Amount,  @class = "form-control" })
+                    @Html.TextBoxFor(X => X.Sum, new { @Value = ViewBag.TotalPrice, @class = "form-control" })
+                    @Html.TextBoxFor(X => X.UnitPrice, new { @Value = ViewBag.UnitPrice,  @class = "form-control" })
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <br />
-                    <label>Miktar</label>
-                    @Html.TextBoxFor(X => X.Amount, new { @Value = ViewBag.Amount, @readonly = "readonly", @class = "form-control" })
-                </div>
-                <br />
-                <div class="col-md-6">
-                    <br />
-                    <label>Birim Fiyatı</label>
-                    @Html.HiddenFor(x => x.UnitPrice, new { Value = ViewBag.Price })
-                    <div class="form-control">@ViewBag.FormattedPrice </div>
-                </div>
-            </div>
+            
             <br />
             <div class="row">
                 <div class="col-md-6">
-
-                    <label>Toplam Fiyatı</label>
-                    @Html.HiddenFor(x => x.Sum, new { @Value = ViewBag.TotalPrice })
-                    <div class="form-control">@ViewBag.FormattedTotalPrice </div>
+                   
                 </div>
                 <br />
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <br />
-                    <button class="btn btn-outline-primary">Oluştur</button>
-                    <a class="btn btn-danger" href="~/Billig/Index">Vazgeç</a>
+                    @Html.Action("BillingDetailPartial")
+                </div>
+
+                <div class="col-md-10">
+
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success" id="submit">Fatura Oluştur </button>
+                    <a class="btn btn-danger" href="~/Transacation/Index">Cancel</a>
                 </div>
 
             </div>
 
-            </form>
+        </form>
     </div>
 </div>
 
@@ -96,6 +91,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
+   
+
+    
     var currentDate = new Date(); // Şu anki tarih ve zamanı al
     var day = currentDate.getDate(); // Günü al
     var month = currentDate.getMonth() + 1; // Ayı al (0'dan başladığı için 1 ekleyin)
@@ -104,7 +102,8 @@
     // Tarihi "yyyy-MM-dd" formatına dönüştür
     var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
-    $('#date').val(formattedDate);
+        $('#date').val(formattedDate);
 
-   
+
+
 </script>

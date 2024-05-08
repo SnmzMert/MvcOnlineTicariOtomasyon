@@ -28,6 +28,8 @@ namespace MvcOnlineTicariOtomasyon.Models.Classes
         public string Time { get; set; }
 
         public int Amount { get; set; }
+
+
         public decimal UnitPrice { get; set; }
         public decimal Sum { get; set; }
 
@@ -37,9 +39,11 @@ namespace MvcOnlineTicariOtomasyon.Models.Classes
         public int Currentid { get; set; }
 
         public virtual Current Current { get; set; }
+        public string TransacationSerialNumber {  get; set; }
         public int Transacationid {  get; set; }
 
-        
+
+
 
         public ICollection<BillingDetail> BillingDetails { get; set; }
         

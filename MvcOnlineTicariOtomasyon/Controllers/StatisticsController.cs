@@ -43,11 +43,15 @@ namespace MvcOnlineTicariOtomasyon.Controllers
             DateTime today = DateTime.Today;
             var value15 = c.Transactions.Count(x => x.Date == today).ToString();
             ViewBag.d15 = value15;
-            //var value16 = c.Transactions.Where(X => X.Date == today).Sum(y => y.TotalPrice).ToString();
-            //ViewBag.d16 = value16;
+            var value16 = c.Transactions.Where(X => X.Date == today).Sum(y => (decimal?)y.TotalPrice).ToString();
+            ViewBag.d16 = value16;
             var value13 = c.Products.Where(u => u.ProductId == (c.Transactions.GroupBy(x => x.Productid).OrderByDescending(z => z.Count()).Select(y => y.Key).FirstOrDefault())).Select(k => k.ProductName).FirstOrDefault();
             ViewBag.d13 = value13;
+           
+            
             return View();
+
+
         }
         public ActionResult SimpleTable()
         {

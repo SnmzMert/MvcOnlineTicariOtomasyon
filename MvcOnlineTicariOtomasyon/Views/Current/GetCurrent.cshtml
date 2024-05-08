@@ -38,7 +38,7 @@
     @Html.TextBoxFor(x => x.CurrentAmount, new { @class = "form-control", placeholder = "Bakiye Girin" })
     @Html.ValidationMessageFor(x => x.CurrentName, "", new { @style = "color:red" })
     <br />
-    <button class="btn btn-outline-warning">Cari Düzenle</button>
+    <button class="btn btn-outline-warning" id="Btn1">Cari Düzenle</button>
 
 
 }
@@ -51,4 +51,8 @@
         $('#phone').mask('+00 (000) 000-0000');
 
     });
+    $('#Btn1').click(function () {
+        alert("Güncelleme İşlemi Başarıyla Gerçekleşti!")
+    });
+
 </script>,
